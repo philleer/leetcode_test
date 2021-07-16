@@ -1,6 +1,21 @@
-#include <string.h> // strlen
-#include <stdio.h>
+/**
+ *=============================================================================
+ * @Description : Solution for XXX problem from leetcode.
+ * @Author      : phillee (email: phillee2016@163.com)
+ * @Date        : 2021-07-06
+ * @LICENSE     : Copyright (c) philleer 2021. All Rights Reserved.
+ *=============================================================================
+ */
+/**
+ * Include header files
+ */
+#include <stdio.h>   // stdin/stdout/stderr
+#include <unistd.h>  // STDIN_FILENO/STDOUT_FILENO/STDERR_FILENO/usleep/stdin
+#include <string.h>  // strlen
 
+/**
+ * Declaration for functions and global variables
+ */
 typedef struct 
 {
 	/**
@@ -18,11 +33,15 @@ typedef struct
 
 void str_reverse(const char* src_str, char *dst_str);
 
-int main(const int argc, char* argv[])
+/**
+ * Main function entrance
+ */
+int main(const int argc, char * argv[])
 {
 	Solution solver;
 	solver.p_function = str_reverse;
 
+    /* core module */
 	printf("Please input string to be reversed: ");
 	/**
 	 * ANSIC 标准向 scanf() 增加了一种新特性，称为扫描集(scanset)。
@@ -38,6 +57,9 @@ int main(const int argc, char* argv[])
 	return 0;
 }
 
+/**
+ * Definition of the declared functions
+ */
 void str_reverse(const char* src_str, char *dst_str)
 {
 	int i = 0;

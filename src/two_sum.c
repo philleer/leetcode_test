@@ -6,7 +6,9 @@
  * @LICENSE     : Copyright (c) philleer 2021. All Rights Reserved.
  *=============================================================================
  */
-
+/**
+ * Include header files
+ */
 #include <stdio.h>	 // stdin/stdout/stderr
 #include <termios.h> // tcgetattr/tcsetattr
 #include <unistd.h>  // STDIN_FILENO/STDOUT_FILENO/STDERR_FILENO/usleep/stdin
@@ -16,11 +18,17 @@
 #define NB_DISABLE 0x00
 #define NB_ENABLE  0x01
 
+/**
+ * Declaration for functions and global variables
+ */
 void nonblock(int state);
 int kbhit(void);
 
 void solution(int *nums, const int target);
 
+/**
+ * Main function entrance
+ */
 int main(const int argc, char * argv[])
 {
 	float weight;
@@ -32,6 +40,7 @@ int main(const int argc, char * argv[])
 	printf("%d in hex format is %#x\n", 770, 770);
 	printf("%d in hex format is %#o\n", 770, 770);
 
+    /* core module */
 	int overflow_var = 2147483647;
 	signed int sign_var = -10;
 	unsigned int unsign_var = 100;
@@ -74,6 +83,9 @@ int main(const int argc, char * argv[])
 	return 0;
 }
 
+/**
+ * Definition of the declared functions
+ */
 void nonblock(int state)
 {
 	struct termios ttystate;
