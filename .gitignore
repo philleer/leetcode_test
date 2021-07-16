@@ -1,1 +1,5 @@
+bin
+build
 *.o
+bin/*
+build/*.o

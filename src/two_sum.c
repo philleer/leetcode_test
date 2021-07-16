@@ -23,38 +23,53 @@ void solution(int *nums, const int target);
 
 int main(const int argc, char * argv[])
 {
-	int i=0;
+	float weight;
+	float value;
+	printf("Please enter your weight in pounds: ");
+	scanf("%f", &weight);
+	value = 770 * weight * 14.5833f;
+	printf("Your weight worth: $%.2f.\n", value);
+	printf("%d in hex format is %#x\n", 770, 770);
+	printf("%d in hex format is %#o\n", 770, 770);
 
-	nonblock(NB_ENABLE);
-	while(!i)
-	{
-		// suspend execution for microsecond intervals
-		usleep(5);
-		i=kbhit();
-		if (i!=0)
-		{
-			if ('q'==fgetc(stdin))
-				i=1;
-			else
-				i=0;
-		}
+	int overflow_var = 2147483647;
+	signed int sign_var = -10;
+	unsigned int unsign_var = 100;
+	printf("%d, %d, %d\n", overflow_var, overflow_var+1, overflow_var+3);
+	printf("sign_var=%d, unsign_var=%d\n", sign_var, unsign_var);
 
-		printf("Please input the array:\n");
-		int *p_int;
-		char tmp_str[100];
+	// int i=0;
 
-		while (NULL==fgets(tmp_str, strlen(tmp_str), stdin))
-		{
+	// nonblock(NB_ENABLE);
+	// while(!i)
+	// {
+	// 	// suspend execution for microsecond intervals
+	// 	usleep(5);
+	// 	i=kbhit();
+	// 	if (i!=0)
+	// 	{
+	// 		if ('q'==fgetc(stdin))
+	// 			i=1;
+	// 		else
+	// 			i=0;
+	// 	}
 
-		}
-		printf("Input string: %s\n", tmp_str);
-		int length;
+	// 	printf("Please input the array:\n");
+	// 	int *p_int;
+	// 	char tmp_str[100];
 
-		int nums[5] = {1,2,3,4,5};
-		int target = 2;
-		// solution(nums, target);
-	}
-	nonblock(NB_DISABLE);
+	// 	while (NULL==fgets(tmp_str, strlen(tmp_str), stdin))
+	// 	{
+
+	// 	}
+	// 	printf("Input string: %s\n", tmp_str);
+	// 	int length;
+
+	// 	int nums[5] = {1,2,3,4,5};
+	// 	int target = 2;
+	// 	// solution(nums, target);
+	// }
+	// nonblock(NB_DISABLE);
 
 	return 0;
 }
