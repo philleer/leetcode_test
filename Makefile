@@ -12,8 +12,8 @@ CC := gcc
 CC_FLAGS := -g -Wall
 RM := rm -rf
 
-CUR_DIR = $(shell pwd)
-CUR_TIM = $(shell date)
+CUR_DIR := $(shell pwd)
+CUR_TIM := $(shell date)
 SRC_C = $(wildcard $(CUR_DIR)/$(SRC_DIR)/*.c)
 OBJ_C = $(addprefix $(BUILD_DIR)/,$(patsubst %.c,%.o,$(notdir $(SRC_C))))
 TARGET = $(addprefix $(BIN_DIR)/, $(patsubst %.c,%,$(notdir $(SRC_C))))
