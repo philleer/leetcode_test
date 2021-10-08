@@ -15,6 +15,8 @@
 #include <string.h>  // strlen
 #include <math.h>
 #include <ctype.h>	 // islower, isupper
+#include <time.h>	 // time, time_t, strftime, localtime, localtime_r
+#include <locale.h>	 // LC_TIME
 
 #define TIME_FUNIT 60.0
 #define TIME_IUNIT 60
@@ -35,9 +37,15 @@
 #define THRESH3_NO10 29750
 #define THRESH4_NO10 14875
 
+#define FIRST 3
+#define SECOND (FIRST*2)
+#undef FIRST
+#define FIRST 2
+
 /**
  * Declaration for functions and global variables
  */
+void check_system(void);
 int my_add(int num1, int num2);
 float cubic_float (float num);
 void Temperatures(double degree_fah);
@@ -50,7 +58,22 @@ void show_usage(void);
 int main(const int argc, char * argv[])
 {
     /* core module */
+    check_system();
 	printf("int occupies %d bytes on this machine.\n", sizeof(int));
+
+	/* Casual experiment */
+	int iArray_a[5] = {1,2,3,4,5};
+
+	int *ptr1 = &iArray_a+1;
+	printf("sizeof iArray_a = %d\n", sizeof(&iArray_a));
+	printf("%x, %p, %p\n", ptr1[-1], iArray_a, ptr1);
+
+	int *ptr2 = (int *)((long int)iArray_a+1);
+	printf("%p, %x\n", ptr2, *ptr2);
+
+	int iNum_z = SECOND;
+	printf("FIRST=%d,SECOND=%d,iNum_z=%d\n", FIRST, SECOND, iNum_z);
+	printf("size of (void *) pointer: %d\n", sizeof(void *));
 
 	/* Chapter 7 Programming practice No.1 */
 	//char c_input;
@@ -261,56 +284,55 @@ int main(const int argc, char * argv[])
 	//}
 
 	/* Chapter 7 Programming practice No.10 */
-	char c_veg_type;
-	double pound = 0.f;
-	const double PRICE_KOREAN = 1.25f;
-	const double PRICE_SWEETY = 0.65f;
-	const double PRICE_CARROT = 0.89f;
-	double cost_veg = 0.f;
-	double cost_tsp = 0.f;
-	printf("Please enter the type to buy and the pound you want:\n");
-	scanf("%c,%lf", &c_veg_type, &pound);
-	while (1)
-	{
-		double price = 0.f;
-		double discount = 0.f;
-		switch(c_veg_type) {
-			case 'a': price = PRICE_KOREAN; break;
-			case 'b': price = PRICE_SWEETY; break;
-			case 'c': price = PRICE_CARROT; break;
-			default: break;
-		}
-		cost_veg = price * pound;
-		if (cost_veg > 100.f) {
-			discount = cost_veg*0.05f;
-			cost_veg *= 0.95f;
-		}
+	// char c_veg_type;
+	// double pound = 0.f;
+	// const double PRICE_KOREAN = 1.25f;
+	// const double PRICE_SWEETY = 0.65f;
+	// const double PRICE_CARROT = 0.89f;
+	// double cost_veg = 0.f;
+	// double cost_tsp = 0.f;
+	// printf("Please enter the type to buy and the pound you want:\n");
+	// scanf("%c,%lf", &c_veg_type, &pound);
+	// while (1)
+	// {
+	// 	double price = 0.f;
+	// 	double discount = 0.f;
+	// 	switch(c_veg_type) {
+	// 		case 'a': price = PRICE_KOREAN; break;
+	// 		case 'b': price = PRICE_SWEETY; break;
+	// 		case 'c': price = PRICE_CARROT; break;
+	// 		default: break;
+	// 	}
+	// 	cost_veg = price * pound;
+	// 	if (cost_veg > 100.f) {
+	// 		discount = cost_veg*0.05f;
+	// 		cost_veg *= 0.95f;
+	// 	}
 
-		if (pound <= 5.f)
-			cost_tsp = 3.50f;
-		else if (pound <= 20.f)
-			cost_tsp = 10.0f;
-		else
-			cost_tsp = 8.0f + (pound-20.f)*0.1f;
+	// 	if (pound <= 5.f)
+	// 		cost_tsp = 3.50f;
+	// 	else if (pound <= 20.f)
+	// 		cost_tsp = 10.0f;
+	// 	else
+	// 		cost_tsp = 8.0f + (pound-20.f)*0.1f;
 		
-		switch(c_veg_type) {
-			case 'a': printf("You want to buy korean "); break;
-			case 'b': printf("You want to buy sweety "); break;
-			case 'c': printf("You want to buy carrot "); break;
-			default: break;
-		}
-		printf("%.2lf pounds.\n", pound);
-		printf("The vegetable cost $%.2lf, the transportion cost $%.2lf and the total cost equals $%.2lf\n", cost_veg, cost_tsp, cost_veg+cost_tsp);
-		if (discount > 1e-5f)
-			printf("You have got a $%.2lf discount.\n", discount);
-		else
-			printf("There is no discount for the current bill.\n");
-		printf("Please re-enter the type to buy and the pound you want:\n");
-		scanf("%c,%lf", &c_veg_type, &pound);
-		if (c_veg_type=='q')
-			break;
-	}
-	printf("Done!\n");
+	// 	switch(c_veg_type) {
+	// 		case 'a': printf("You want to buy korean "); break;
+	// 		case 'b': printf("You want to buy sweety "); break;
+	// 		case 'c': printf("You want to buy carrot "); break;
+	// 		default: break;
+	// 	}
+	// 	printf("%.2lf pounds.\n", pound);
+	// 	printf("The vegetable cost $%.2lf, the transportion cost $%.2lf and the total cost equals $%.2lf\n", cost_veg, cost_tsp, cost_veg+cost_tsp);
+	// 	if (discount > 1e-5f)
+	// 		printf("You have got a $%.2lf discount.\n", discount);
+	// 	else
+	// 		printf("There is no discount for the current bill.\n");
+	// 	printf("Please re-enter the type to buy and the pound you want:\n");
+	// 	scanf("%c,%lf", &c_veg_type, &pound);
+	// 	if (c_veg_type=='q')
+	// 		break;
+	// }
 
 	/* Chapter 6 Programming practice No.4 */
 	//char c_input;
@@ -582,21 +604,73 @@ int main(const int argc, char * argv[])
 	//printf("height in inch is %4.2f\n", height/2.54f);
 	//printf("The input is %f or %e\n", height, height);
 
+	printf("Done!\n");
+
 	return 0;
+}
+
+void show_current_time(void)
+{
+    char buff[50];
+    struct tm tm_current;
+    // localtime may not thread-safe
+    // https://en.cppreference.com/w/c/chrono/localtime
+    localtime_r(&(time_t){time(NULL)}, &tm_current);
+
+    // https://en.cppreference.com/w/c/chrono/strftime
+    if (strftime(buff, sizeof(buff), "%c", &tm_current)) {
+        printf("%s\n", buff);
+    } else {
+        printf("strftime failed!\n");
+    }
 }
 
 /**
  * Definition of the declared functions
  */
-int my_add(int num1, int num2) {
+void check_system(void)
+{
+	union endian_check
+	{
+		int iNum;
+		char ch;
+	} endian_test;
+	endian_test.iNum = 1;
+
+	/* Date and time when running the program */
+	show_current_time();
+
+	/* 32-bit machine or 64-bit machine */
+#ifdef __x86_64__
+	printf("64-bits machine.\n");
+#elif __i386__
+	printf("32-bits machine.\n");
+#endif
+
+	/* Big-endian machine or little-endian machine */
+	if (1==endian_test.ch)
+	{
+		printf("The system endian mode is Little-Endian.\n");
+	}
+	else
+	{
+		printf("The system endian mode is Big-Endian.\n");
+	}
+	return ;
+}
+
+int my_add(int num1, int num2)
+{
 	return (num1+num2);
 }
 
-float cubic_float (float num) {
+float cubic_float (float num)
+{
 	return num*num*num;
 }
 
-void Temperatures(double degree_fah) {
+void Temperatures(double degree_fah)
+{
 	const double adj_kel = 273.16f;
 	const double scale = 1.8f;
 	const double adjust = 32.0f;
