@@ -9,32 +9,37 @@ makefile_path=${build_path}/Makefile
 cmake_cached_files="${build_path}/CMake* ${build_path}/Makefile ${build_path}/*.cmake"
 
 cd ${build_path}
-if [ ! -f "${makefile_path}" ]; then
-# if Makefile does not exist
-	echo "No makefile found!"
-	if [ ! -d ${build_path}/CMakeFiles ]; then
-		echo "Not build yet!"
+
+if [ "$1" == "cmake" ]; then
+	if [ ! -f "${makefile_path}" ]; then
+	# if Makefile does not exist
+		echo "No makefile found!"
+		if [ ! -d ${build_path}/CMakeFiles ]; then
+			echo "Not build yet!"
+		else
+			if [ -n "${cmake_cached_files}" ]; then
+				rm -rf ${cmake_cached_files}
+			fi
+		fi
 	else
+	# if Makefile exists, make clean
+		echo "make clean..."
+		make clean
 		if [ -n "${cmake_cached_files}" ]; then
 			rm -rf ${cmake_cached_files}
 		fi
 	fi
-else
-# if Makefile exists, make clean
-	echo "make clean..."
-	make clean
-	if [ -n "${cmake_cached_files}" ]; then
-		rm -rf ${cmake_cached_files}
+	
+	# if cmakelists.txt does exist, use it to compile
+	# else exit safely
+	if [ ! -f ${current_path}/CMakeLists.txt ]; then
+		echo "No CMakeLists.txt found!!"
+		exit 0
+	else
+		cmake .. && make -j
 	fi
-fi
-
-# if cmakelists.txt does exist, use it to compile
-# else exit safely
-if [ ! -f ${current_path}/CMakeLists.txt ]; then
-	echo "No CMakeLists.txt found!!"
-	exit 0
-else
-	cmake .. && make -j
+elif [ -z "$1" ]; then
+	make clean && make -j
 fi
 cd ${current_path}
 

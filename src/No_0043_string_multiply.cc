@@ -13,15 +13,18 @@ DEFINE_string(languages, "english,french,german",
 
 void glog_init(const int argc, char *argv[]);
 
-int main(const int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	printf("Hello world! I am string multiply function.\n");
+	gflags::ParseCommandLineFlags(&argc, &argv, true);
 	glog_init(argc, argv);
 
 	if (FLAGS_big_menu)
 		FLAGS_languages += ",klingon";
 	if (FLAGS_languages.find("finnish")==std::string::npos)
 		printf("All supported languages: %s\n", FLAGS_languages.c_str());
+	else
+		printf("Modified languages: %s\n", FLAGS_languages.c_str());
 	//LOG(WARNING) << "glog works finely!";
 
 	//google::ShutdownGoogleLogging();
