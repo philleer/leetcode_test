@@ -13,7 +13,7 @@
 #include <stdio.h>   // stdin/stdout/stderr
 #include <unistd.h>  // STDIN_FILENO/STDOUT_FILENO/STDERR_FILENO/usleep/stdin
 #include <string.h>  // strlen
-#include <math.h>
+#include <math.h>	 // fabs
 #include <ctype.h>	 // islower, isupper
 #include <time.h>	 // time, time_t, strftime, localtime, localtime_r
 #include <locale.h>	 // LC_TIME
@@ -74,6 +74,21 @@ int main(const int argc, char * argv[])
 	int iNum_z = SECOND;
 	printf("FIRST=%d,SECOND=%d,iNum_z=%d\n", FIRST, SECOND, iNum_z);
 	printf("size of (void *) pointer: %d\n", sizeof(void *));
+
+	int cStr_a[5] = {'A','B','C','D'};
+	int (*p1)[5] = &cStr_a;
+	int (*p2)[5] = cStr_a;
+	printf("%p,%p\n", p1, p2);
+	printf("%p,%p\n", p1+1, p2+1);
+	int (*p3)[10] = &cStr_a;
+	int (*p4)[10] = cStr_a;
+	printf("%p,%p\n", p3+1, p4+1);
+
+	int iNums_a[5][5];
+	int (*pNums_a)[4];
+	pNums_a = iNums_a;
+	printf("a_ptr=%#p,p_ptr=%#p\n", &iNums_a[4][2], &pNums_a[4][2]);
+	printf("%p,%d\n", &pNums_a[4][2]-&iNums_a[4][2], &pNums_a[4][2]-&iNums_a[4][2]);
 
 	/* Chapter 7 Programming practice No.1 */
 	//char c_input;
