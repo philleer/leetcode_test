@@ -1,6 +1,7 @@
 bin
 build
-*.o
 bin/*
 build/*.o
+Testing
+*.o
 *.swp
