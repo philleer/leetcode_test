@@ -77,7 +77,11 @@ set(INSTALL_GTEST OFF)
 add_subdirectory(3rdparty/googletest)
 add_subdirectory(test)
 
-#add_subdirectory(3rdparty/glog)
+
+#====================================================
+## Compile target executables
+#====================================================
+add_subdirectory(3rdparty/spdlog)
 
 
 #====================================================
@@ -93,7 +97,7 @@ foreach(src ${SRC_LIST})
 	set_target_properties(${SRC_FILE_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 	target_link_libraries(${SRC_FILE_NAME}
 				${SRC_UTILS_LIB}
-				#glog::glog
+				spdlog::spdlog
 				gflags::gflags
 				GTest::gtest
 				GTest::gtest_main

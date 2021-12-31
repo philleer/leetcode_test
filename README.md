@@ -4,8 +4,8 @@
 .
 ├── 3rdparty
 │   ├── gflags
-│   ├── glog
-│   └── googletest
+│   ├── googletest
+│   └── spdlog
 ├── CMakeLists.txt
 ├── Testing
 │   └── Temporary
@@ -29,7 +29,7 @@
     └── simple_test.cc
 ```
 
-- `3rdparty`: embeded submodule such as gflags/googletest/glog etc
+- `3rdparty`: embeded submodule such as gflags/googletest/spdlog etc
 - `CMakeLists.txt`: top level cmake file
 - `Testing`: auto-created dir when use gtest
 - `auto_compile.sh`: command line script to simplify input
@@ -90,17 +90,6 @@ And the dependent extern libs are adopted as follows:
 	git checkout -b v2.2.2
 	```
 
-- **glog**
-	```bash
-	git clone https://github.com/google/glog.git
-	
-	cd glog
-	
-	git checkout v0.5.0
-	
-	git checkout -b v0.5.0
-	```
-
 - **googletest**
 	```bash
 	git clone https://github.com/google/googletest.git
@@ -108,6 +97,17 @@ And the dependent extern libs are adopted as follows:
 	cd googletest
 	
 	git checkout release-1.11.0
+	```
+
+- **spdlog**
+	```bash
+	git clone https://github.com/gabime/spdlog.git
+	
+	cd spdlog
+	
+	git checkout v1.9.2
+	
+	git checkout -b v1.9.2
 	```
 
 

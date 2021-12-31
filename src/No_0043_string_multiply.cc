@@ -5,8 +5,7 @@
 #include <sys/stat.h> // S_IRUSR
 #include <string>
 #include <gflags.h>
-//#include <>
-//#include "3rdparty/glog/src/glog/logging.h"
+#include <spdlog/spdlog.h>
 
 DEFINE_bool(big_menu, true, "Include 'advanced' options in the menu listing");
 DEFINE_string(languages, "english,french,german",
@@ -16,7 +15,11 @@ void glog_init(const int argc, char *argv[]);
 
 int main(int argc, char *argv[])
 {
-	printf("Hello world! I am string multiply function.\n");
+	spdlog::set_level(spdlog::level::warn);
+	spdlog::info("Hello world!");
+	spdlog::warn("I am string multiply function {:08d}", 12);
+	spdlog::error("some error message with arg: {}", 1);
+	spdlog::critical("when fatal encountered, exit!");
 	gflags::ParseCommandLineFlags(&argc, &argv, true);
 	glog_init(argc, argv);
 
