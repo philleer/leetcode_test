@@ -38,8 +38,17 @@ if [ "$1" == "cmake" ]; then
 	else
 		cmake .. && make -j
 	fi
-elif [ -z "$1" ]; then
+elif [ "$1" == "make" -a "$2" == "clean" ]; then
 	make clean && make -j
+elif [ "$1" == "make" ]; then
+	make -j
+else
+	printf "Usage options:\n"
+	printf "    ${0} -h \t[help information]\n"
+	printf "    ${0} --help \t[help information]\n"
+	printf "    ${0} cmake \t[rebuild from beginning, remove cmake temps and then cmake-make]\n"
+	printf "    ${0} make clean \t[make clean && make -j]\n"
+	printf "    ${0} make \t[make -j directly]\n"
 fi
 cd ${current_path}
 

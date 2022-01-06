@@ -3,5 +3,6 @@ build
 bin/*
 build/*.o
 Testing
+logging
 *.o
 *.swp
