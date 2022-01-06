@@ -29,9 +29,11 @@ int main(int argc, char *argv[])
 		printf("All supported languages: %s\n", FLAGS_languages.c_str());
 	else
 		printf("Modified languages: %s\n", FLAGS_languages.c_str());
-	//LOG(WARNING) << "glog works finely!";
 
-	//google::ShutdownGoogleLogging();
+	double nc = 0;
+	++nc;
+	printf("Value of EOF is %d, %.0f\n", EOF, nc);
+
 	return 0;
 }
 
@@ -42,15 +44,15 @@ void glog_init(const int argc, char *argv[])
 	std::string log_path(executable_main_path);
 	log_path = log_path.substr(0, log_path.rfind("/")+1) + "logging";
 
-	//if (-1==access(log_path.c_str(), F_OK))
-	//{
-	//	if (-1==mkdir(log_path.c_str(), S_IRUSR | S_IWUSR | S_IXUSR))
-	//	{
-	//		printf("FATAL ERROR: %s does not exist and cannot mkdir!!!\n", log_path.c_str());
-	//		exit(EXIT_FAILURE);
-	//	}
-	//	printf("Directory %s is created.\n", log_path.c_str());
-	//}
+	if (-1==access(log_path.c_str(), F_OK))
+	{
+		if (-1==mkdir(log_path.c_str(), S_IRUSR | S_IWUSR | S_IXUSR))
+		{
+			printf("FATAL ERROR: %s does not exist and cannot mkdir!!!\n", log_path.c_str());
+			exit(EXIT_FAILURE);
+		}
+		printf("Directory %s is created.\n", log_path.c_str());
+	}
 
 	//google::InitGoogleLogging(argv[0]);
 	//char log_level_path[100];
