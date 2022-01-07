@@ -39,6 +39,8 @@
 
 ## Dependencies required
 
+#### MacOS
+
 - **system information**
 	```bash
 	macOS Monterey
@@ -51,7 +53,7 @@
 
 - **clang**
 	```bash
-	cv@my-MBP playground-test % clang --version
+	cv@my-MBP ~ % clang --version
 	Apple clang version 13.0.0 (clang-1300.0.29.30)
 	Target: x86_64-apple-darwin21.2.0
 	Thread model: posix
@@ -60,7 +62,7 @@
 
 - **cmake**
 	```bash
-	cv@my-MBP playground-test % cmake --version
+	cv@my-MBP ~ % cmake --version
 	cmake version 3.22.1
 	
 	CMake suite maintained and supported by Kitware (kitware.com/cmake).
@@ -68,7 +70,7 @@
 
 - **make**
 	```bash
-	cv@my-MBP playground-test % make --version
+	cv@my-MBP ~ % make --version
 	GNU Make 3.81
 	Copyright (C) 2006  Free Software Foundation, Inc.
 	This is free software; see the source for copying conditions.
@@ -76,6 +78,49 @@
 	
 	This program built for i386-apple-darwin11.3.0
 	```
+
+#### Linux Ubuntu
+
+- **system information**
+        ```bash
+        cv@cv:~$ uname -a
+        Linux cv 4.18.0-25-generic #26~18.04.1-Ubuntu SMP Thu Jun 27 07:28:31 UTC 2019
+        x86_64 x86_64 x86_64 GNU/Linux
+        ```
+
+- **git**
+        ```bash
+        cv@cv:~$ git --version
+        git version 2.17.1
+        ```
+
+- **g++**
+        ```bash
+        cv@cv:~$ g++ --version
+        g++ (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0
+        Copyright (C) 2017 Free Software Foundation, Inc.
+        This is free software; see the source for copying conditions.  There is NO
+        warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+        ```
+
+- **cmake**
+        ```bash
+        cv@cv:~$ cmake --version
+        cmake version 3.10.2
+
+        CMake suite maintained and supported by Kitware (kitware.com/cmake)
+        ```
+
+- **make**
+        ```bash
+        cv@cv:~$ make --version
+        GNU Make 4.1
+        Built for x86_64-pc-linux-gnu
+        Copyright (C) 1988-2014 Free Software Foundation, Inc.
+        License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+        This is free software: you are free to change and redistribute it.
+        There is NO WARRANTY, to the extent permitted by law.
+        ```
 
 And the dependent extern libs are adopted as follows:
 

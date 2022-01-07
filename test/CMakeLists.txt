@@ -17,13 +17,6 @@ foreach(test_file ${TEST_LIST})
 	set_target_properties(${TEST_FILE_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 	target_link_libraries(${TEST_FILE_NAME} GTest::gtest GTest::gtest_main pthread)
 	#gtest_discover_tests(myclass_test)
-endforeach()
 
-add_test(
-		NAME simple_test
-		COMMAND $<TARGET_FILE:simple_test>
-	)
-add_test(
-		NAME myclass_test
-		COMMAND $<TARGET_FILE:myclass_test>
-	)
+	add_test(NAME ${TEST_FILE_NAME} COMMAND $<TARGET_FILE:${TEST_FILE_NAME}>)
+endforeach()

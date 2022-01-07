@@ -17,6 +17,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "ioutils.h"
 
 extern "C"

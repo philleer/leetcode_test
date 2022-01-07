@@ -8,6 +8,10 @@ build_path=${current_path}/build
 makefile_path=${build_path}/Makefile
 cmake_cached_files="${build_path}/CMake* ${build_path}/Makefile ${build_path}/*.cmake"
 
+if [ ! -d ${build_path} ]; then
+    mkdir -p ${build_path}
+fi
+
 cd ${build_path}
 
 if [ "$1" == "cmake" ]; then

@@ -9,11 +9,12 @@
 /**
  * Include header files
  */
-#include <stdio.h>	 // stdin/stdout/stderr
-#include <termios.h> // tcgetattr/tcsetattr
-#include <unistd.h>  // STDIN_FILENO/STDOUT_FILENO/STDERR_FILENO/usleep/stdin
+#include <stdio.h>	// stdin/stdout/stderr
+#include <termios.h>	// tcgetattr/tcsetattr
+#include <unistd.h>	// STDIN_FILENO/STDOUT_FILENO/STDERR_FILENO/usleep/stdin
 #include <curses.h>
-#include <string.h>	 // strlen
+#include <string.h>	// strlen
+#include <sys/time.h>	// struct timeval
 
 #define NB_DISABLE 0x00
 #define NB_ENABLE  0x01
