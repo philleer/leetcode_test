@@ -5,7 +5,8 @@
  * on the offline machine
  * ============================================================================
  * //////////// Apple clang 13.0.0 (clang-1300.0.29.30) when on mac ///////////
- * /////////////////           G++5.4.0 when on Linux           /////////////// * ============================================================================ *
+ * /////////////////           G++5.4.0 when on Linux           ///////////////
+ * ============================================================================
  * If any question, feel free to create an issue or Pull Request
  * @phillee<< phillee2016@163.com >>
  ******************************************************************************
@@ -16,8 +17,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
-
-std::string intVec2Str(std::vector<int> list);
+#include "ioutils.h"
 
 int findRightmostOne(signed int num);
 
@@ -203,27 +203,12 @@ int main(int argc, char const *argv[]) {
 		std::string in = intVec2Str(nums);
 		std::cout << "The input vector is:"
 			<< in << std::endl;
-		int res = Solution().singleNumberII(nums);
+		int res = Solution().singleNumber(nums);
 		std::cout << "The processed result is : "
 			<< res << std::endl;
 	}
 
 	return 0;
-}
-
-std::string intVec2Str(std::vector<int> list)
-{
-	int len = list.size();
-	if (0==len)
-		return "[]";
-
-	std::string res("[");
-	for(int idx = 0; idx < len-1; ++idx) {
-		res += std::to_string(list[idx]) + ", ";
-	}
-	res += std::to_string(list.back()) + "]";
-
-	return res;
 }
 
 /*

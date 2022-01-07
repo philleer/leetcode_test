@@ -26,16 +26,16 @@ message(STATUS "BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 ## Workspace variable settings
 #====================================================
 set(BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/build)
-set(INCLUDES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/includes)
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SRC_UTILS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/utils)
-set(INCLUDES_UTILS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/includes/utils)
 set(3RDPARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty)
 
 # Set output directory to store executables
 # create if not exist
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
+# Set basic include directories
+include_directories(${SRC_UTILS_DIR})
 
 ## Search for source files
 file(GLOB_RECURSE SRC_LIST "${SRC_DIR}/*.c*")
@@ -93,10 +93,9 @@ foreach(src ${SRC_LIST})
 		continue()
 	endif()
 	string(REGEX REPLACE ".+/(.+)\\..*" "\\1" SRC_FILE_NAME ${src})
-	add_executable(${SRC_FILE_NAME} ${src} ${SRC_UTILS_LIB})
+	add_executable(${SRC_FILE_NAME} ${src} ${SRC_UTILS_LIST})
 	set_target_properties(${SRC_FILE_NAME} PROPERTIES LINKER_LANGUAGE CXX)
-	target_link_libraries(${SRC_FILE_NAME}
-				${SRC_UTILS_LIB}
+	target_link_libraries(${SRC_FILE_NAME} # ${SRC_UTILS_LIB}
 				spdlog::spdlog
 				gflags::gflags
 				GTest::gtest

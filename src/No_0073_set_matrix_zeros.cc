@@ -2,31 +2,8 @@
 #include <vector>
 #include <iostream>
 #include <set>
-#include <spdlog/spdlog.h>
-#include <spdlog/fmt/bundled/printf.h>
-
-template <class loggerPtr, class... Args>
-void loglineprintf(loggerPtr logger,
-				   spdlog::level::level_enum level,
-				   spdlog::source_loc loc,
-				   const char* fmt,
-				   const Args&... args) noexcept
-{
-    if (logger && logger->should_log(level))
-    {
-        logger->log(loc, level, "{}", fmt::sprintf(fmt, args...));
-    }
-}
-
-#define SPDLOG_LOGGER_PRINTF(logger, level, ...) \
-	    loglineprintf(logger, level, spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, __VA_ARGS__)
-
-//specific log implementation macros
-#define LOG_INFO(...) SPDLOG_LOGGER_PRINTF(spdlog::default_logger(),spdlog::level::info,__VA_ARGS__)
-#define LOG_ERROR(...) SPDLOG_LOGGER_PRINTF(spdlog::default_logger(),spdlog::level::err,__VA_ARGS__)
-
-void print_vector(const std::vector<int>& vec);
-void print_2d_vector(const std::vector<std::vector<int>>& vec);
+#include "ioutils.h"
+#include "mylog.h"
 
 // 1. A straightforward solution using O(mn) space is probably a bad idea.
 // 2. A simple improvement uses O(m + n) space, but still not the best solution.
@@ -185,33 +162,6 @@ public:
     }
 };
 
-void print_vector(const std::vector<int>& vec)
-{
-	int cols = vec.size();
-	if (0==cols)
-		return ;
-	printf("[");
-	for (int x=0; x<cols-1; x++)
-	{
-		printf("%4d, ", vec[x]);
-	}
-	printf("%4d]", vec.back());
-}
-
-void print_2d_vector(const std::vector<std::vector<int>>& vec)
-{
-	int rows = vec.size();
-
-	printf("[");
-	for (int y=0; y<rows-1; y++)
-	{
-		print_vector(vec[y]);
-		printf("\n ");
-	}
-	print_vector(vec.back());
-	printf("]\n");
-}
-
 int main(int argc, char *argv[])
 {
     LOG_INFO("%s", __func__);
@@ -233,4 +183,3 @@ int main(int argc, char *argv[])
 	
 	return 0;
 }
-
