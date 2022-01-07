@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
 	spdlog::error("some error message with arg: {}", 1);
 	spdlog::critical("when fatal encountered, exit!");
 	gflags::ParseCommandLineFlags(&argc, &argv, true);
-	log_init(argc, argv);
 
 	if (FLAGS_big_menu)
 		FLAGS_languages += ",klingon";
