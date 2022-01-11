@@ -176,13 +176,17 @@ public:
 
 int main(int argc, char const *argv[]) {
 	if (-1L < 1U)
-    {
-        printf("int is promoted to unsigned long type!\n");
-    }
+	{
+		printf("sizeof(unsigned int)=%ld, sizeof(signed long int)=%ld\n",
+			   sizeof(unsigned int), sizeof(signed long int));
+		printf("unsigned int is promoted to signed long type!\n");
+	}
 	if (-1L > 1UL)
-    {
-        printf("signed long is promoted to unsigned long type!\n");
-    }
+	{
+		printf("sizeof(signed long int)=%ld, sizeof(unsigned long int)=%ld\n",
+			   sizeof(signed long int), sizeof(unsigned long int));
+		printf("signed long is promoted to unsigned long type!\n");
+	}
 	std::cout << (signed int)0x80000000 << std::endl;
 	std::cout << (signed int)0x7fffffff << std::endl;
 	std::cout << "2^31-1=" << ((unsigned int)(1<<31)-1) << std::endl;
