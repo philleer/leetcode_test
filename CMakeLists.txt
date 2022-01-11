@@ -38,8 +38,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 include_directories(${SRC_UTILS_DIR})
 
 ## Search for source files
-file(GLOB_RECURSE SRC_LIST "${SRC_DIR}/*.c*")
-file(GLOB_RECURSE SRC_UTILS_LIST "${SRC_UTILS_DIR}/*.c*")
+file(GLOB_RECURSE SRC_LIST "${SRC_DIR}/[^.]*.c*")
+file(GLOB_RECURSE SRC_UTILS_LIST "${SRC_UTILS_DIR}/[^.]*.c*")
 
 
 #====================================================
