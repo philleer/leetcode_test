@@ -45,21 +45,21 @@
 /**
  * Declaration for functions and global variables
  */
-void check_system(void);
+void check_system_endian(void);
 int my_add(int num1, int num2);
 float cubic_float (float num);
 void Temperatures(double degree_fah);
 double diff_over_multiply(double num1, double num2);
 void show_usage(void);
+void test_workspace(void);
 
 /**
  * Main function entrance
  */
 int main(const int argc, char * argv[])
 {
-    /* core module */
-    check_system();
-	printf("int occupies %d bytes on this machine.\n", sizeof(int));
+	/* core module */
+	test_workspace();
 
 	/* Casual experiment */
 	int iArray_a[5] = {1,2,3,4,5};
@@ -626,24 +626,31 @@ int main(const int argc, char * argv[])
 
 void show_current_time(void)
 {
-    char buff[50];
-    struct tm tm_current;
-    // localtime may not thread-safe
-    // https://en.cppreference.com/w/c/chrono/localtime
-    localtime_r(&(time_t){time(NULL)}, &tm_current);
+	char buff[50];
+	struct tm tm_current;
+	// localtime may not thread-safe
+	// https://en.cppreference.com/w/c/chrono/localtime
+	localtime_r(&(time_t){time(NULL)}, &tm_current);
 
-    // https://en.cppreference.com/w/c/chrono/strftime
-    if (strftime(buff, sizeof(buff), "%c", &tm_current)) {
-        printf("%s\n", buff);
-    } else {
-        printf("strftime failed!\n");
-    }
+	// https://en.cppreference.com/w/c/chrono/strftime
+	if (strftime(buff, sizeof(buff), "%c", &tm_current)) {
+		printf("%s\n", buff);
+	} else {
+		printf("strftime failed!\n");
+	}
 }
 
 /**
  * Definition of the declared functions
+ * Description:
+ * 	For compute, how to save 11 22 33 44 in the storage?
+ * 	Big-Endian means high bit first
+ * 	Little-Endian means low bit first
+ * 	Since in common address value increase
+ * 	So the result is 11 22 33 44 on big endian machine
+ * 	and 44 33 22 11 on little endian machine
  */
-void check_system(void)
+void check_system_endian(void)
 {
 	union endian_check
 	{
@@ -707,4 +714,46 @@ void show_usage(void)
 	printf("3) $%.2f/hr\t\t\t4) $%.2f/hr\n", PAY_RATE3, PAY_RATE4);
 	printf("5) quit\n");
 	printf("****************************************\n");
+}
+
+void test_workspace(void)
+{
+	check_system_endian();
+	printf("Type char has %lu bytes\n", sizeof(char));
+	printf("Type short has %lu bytes\n", sizeof(short));
+	printf("Type int has %lu bytes\n", sizeof(int));
+	printf("Type float has %lu bytes\n", sizeof(float));
+	printf("Type double has %lu bytes\n", sizeof(double));
+
+	// char type
+	char ch = 'A';
+	printf("char constant occupies %d bytes while char variable %d bytes\n", sizeof('A'), sizeof(ch));
+	printf("what does \\0x6e like? \x6e, 0x6e=%c\n", 0x6e);
+
+	// float storage
+	// e.g. 32-bit float number
+	// 1-bit sign + 8-bit exponent + 23-bit mantissa
+	// 0.5f --> 0 0111 1110 0...0 --> 3f 00 00 00
+	float f_num = 0.5f;
+	float *p_f = &f_num;
+	printf("float f_num=%f\n", *p_f);
+	char *p_iff = (char *)p_f;
+	for (int i=3; i>=0; i--)
+	{
+		printf("%02x ", *(p_iff+i));
+	}
+	printf("\n");
+
+	// int num 5 in storage is 00 00 00 05
+	// which can be interpreted as float (1*2^-21+1*2^-23)*2^-127 ~= +0
+	int i_num = 5;
+	printf("int i_num=%d\n", i_num);
+	int *p_i = &i_num;
+	char *p_ffi = (char *)p_i;
+	for (int i=3; i>=0; i--)
+	{
+		printf("%02x ", *(p_ffi+i));
+	}
+	printf("\n");
+
 }
