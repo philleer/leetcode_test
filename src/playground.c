@@ -13,10 +13,10 @@
 #include <stdio.h>   // stdin/stdout/stderr
 #include <unistd.h>  // STDIN_FILENO/STDOUT_FILENO/STDERR_FILENO/usleep/stdin
 #include <string.h>  // strlen
-#include <math.h>	 // fabs
-#include <ctype.h>	 // islower, isupper
-#include <time.h>	 // time, time_t, strftime, localtime, localtime_r
-#include <locale.h>	 // LC_TIME
+#include <math.h>    // fabs
+#include <ctype.h>   // islower, isupper
+#include <time.h>    // time, time_t, strftime, localtime, localtime_r
+#include <locale.h>  // LC_TIME
 #include <stdlib.h>  // atoi
 #include <sys/time.h>
 
@@ -54,8 +54,8 @@ void Temperatures(double degree_fah);
 double diff_over_multiply(double num1, double num2);
 void show_usage(void);
 void test_workspace(void);
-
 void test_fibonacci(int n);
+void text_cnt(void);
 
 /**
  * Main function entrance
@@ -730,6 +730,20 @@ void test_workspace(void)
 	printf("Type float has %lu bytes\n", sizeof(float));
 	printf("Type double has %lu bytes\n", sizeof(double));
 
+	// automatic type conversion
+	if (-1L < 1U)
+	{
+		printf("sizeof(unsigned int)=%lu\nsizeof(signed long int)=%lu\n",
+		       sizeof(unsigned int), sizeof(signed long int));
+		printf("\'-1L<1U\' since unsigned int is promoted to signed long type!\n");
+	}
+	if (-1L > 1UL)
+	{
+		printf("sizeof(signed long int)=%lu\nsizeof(unsigned long int)=%lu\n",
+		       sizeof(signed long int), sizeof(unsigned long int));
+		printf("\'-1L>1UL\' since signed long int is promoted to unsigned long type!\n");
+	}
+
 	// char type
 	char ch = 'A';
 	printf("char constant occupies %d bytes while char variable %d bytes\n", sizeof('A'), sizeof(ch));
@@ -860,4 +874,47 @@ void test_fibonacci(int n)
 	putchar('\n');
 	end_time = clock();
 	printf("Loop solution cost %6.4f ms\n",(double)(end_time-start_time)/CLOCKS_PER_SEC*1000.f);
+}
+
+#define BACKSPACE ('\b')
+void text_cnt(void)
+{
+	char c;
+	char prev;
+	long n_chars = 0;
+	long n_words = 0;
+	long n_lines = 0;
+	int p_lines = 0;
+	int inword = 0;
+	char input[500];
+
+	printf("[Enter text to be analyzed(Ctl-C to terminate):]\n");
+	while ((c=getchar())!=EOF)
+	{
+		if (BACKSPACE==c)
+		{
+			putchar(BACKSPACE);
+		}
+		if (!isspace(c))
+		{
+			input[n_chars++] = c;
+		}
+		if ('\n'==c)
+		{
+			++n_lines;
+		}
+		if (!isspace(c)&&!inword)
+		{
+			++n_words;
+			inword = 1;
+		}
+		if (isspace(c)&&inword)
+		{
+			inword = 0;
+		}
+	}
+
+	input[n_chars] = '\0';
+	printf("\ncaptured text: %s\n", input);
+	printf("characters=%ld, words=%ld, lines=%ld\n", n_chars, n_words, n_lines);
 }

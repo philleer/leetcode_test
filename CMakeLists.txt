@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
 set(CMAKE_BUILD_TYPE RELEASE)
 if("${CMAKE_BUILD_TYPE}" STREQUAL "RELEASE")
@@ -25,7 +25,6 @@ message(STATUS "BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 #====================================================
 ## Workspace variable settings
 #====================================================
-set(BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/build)
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SRC_UTILS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/utils)
 set(3RDPARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty)
@@ -95,7 +94,7 @@ foreach(src ${SRC_LIST})
 	string(REGEX REPLACE ".+/(.+)\\..*" "\\1" SRC_FILE_NAME ${src})
 	add_executable(${SRC_FILE_NAME} ${src} ${SRC_UTILS_LIST})
 	set_target_properties(${SRC_FILE_NAME} PROPERTIES LINKER_LANGUAGE CXX)
-	target_link_libraries(${SRC_FILE_NAME} # ${SRC_UTILS_LIB}
+	target_link_libraries(${SRC_FILE_NAME}
 				spdlog::spdlog
 				gflags::gflags
 				GTest::gtest
