@@ -17,6 +17,8 @@
 #include <ctype.h>	 // islower, isupper
 #include <time.h>	 // time, time_t, strftime, localtime, localtime_r
 #include <locale.h>	 // LC_TIME
+#include <stdlib.h>  // atoi
+#include <sys/time.h>
 
 #define TIME_FUNIT 60.0
 #define TIME_IUNIT 60
@@ -53,6 +55,8 @@ double diff_over_multiply(double num1, double num2);
 void show_usage(void);
 void test_workspace(void);
 
+void test_fibonacci(int n);
+
 /**
  * Main function entrance
  */
@@ -60,6 +64,7 @@ int main(const int argc, char * argv[])
 {
 	/* core module */
 	test_workspace();
+	test_fibonacci(atoi(argv[1]));
 
 	/* Casual experiment */
 	int iArray_a[5] = {1,2,3,4,5};
@@ -754,6 +759,105 @@ void test_workspace(void)
 	{
 		printf("%02x ", *(p_ffi+i));
 	}
-	printf("\n");
+	int vf = printf("\nHello world!\n");
+	printf("return value of the last printf statement %d\n", vf);
+}
 
+long fibonacci_recursively(int n)
+{// Recursively
+	if (n<3)
+	{
+		return 1;
+	}
+	return fibonacci_recursively(n-1)+fibonacci_recursively(n-2);
+}
+
+long fibonacci_iteratively(int n)
+{// Iterately
+	if (n<3)
+	{
+		return 1;
+	}
+	long res = 0;
+
+	int *plog = (int *)malloc(sizeof(int)*n);
+	*(plog) = *(plog+1) = 1;
+
+	for (int i=2; i<n; i++)
+	{
+		plog[i] = plog[i-1]+plog[i-2];
+	}
+	res = plog[n-1];
+	free(plog);
+
+	return res;
+}
+
+long fibonacci_loop(int n)
+{
+	if (n<3)
+	{
+		return 1;
+	}
+
+	long res = 0;
+	long last = 1;
+	long prev = 1;
+	for (int i=3; i<=n; i++)
+	{
+		res = prev+last;
+		prev = last;
+		last = res;
+	}
+
+	return res;
+}
+
+void test_fibonacci(int n)
+{
+	// 1 1 2 3 5 8 13 21 34 55
+
+	int iter = 5000;
+	clock_t start_time, end_time;
+
+	start_time = clock();
+	while (--iter>0)
+	{
+		fibonacci_recursively(n);
+	}
+	for (int i=1; i<=n; i++)
+	{
+		printf("F(%u)=%lu\t", i,fibonacci_recursively(i));
+	}
+	putchar('\n');
+	end_time = clock();
+	printf("Recursive solution cost %6.4f ms\n",(double)(end_time-start_time)/CLOCKS_PER_SEC*1000.f);
+
+	iter = 5000;
+	start_time = clock();
+	while (--iter>0)
+	{
+		fibonacci_iteratively(n);
+	}
+	for (int i=1; i<=n; i++)
+	{
+		printf("F(%u)=%lu\t", i,fibonacci_iteratively(i));
+	}
+	putchar('\n');
+	end_time = clock();
+	printf("Iterative solution cost %6.4f ms\n",(double)(end_time-start_time)/CLOCKS_PER_SEC*1000.f);
+
+	iter = 5000;
+	start_time = clock();
+	while (--iter>0)
+	{
+		fibonacci_loop(n);
+	}
+	for (int i=1; i<=n; i++)
+	{
+		printf("F(%u)=%lu\t", i,fibonacci_loop(i));
+	}
+	putchar('\n');
+	end_time = clock();
+	printf("Loop solution cost %6.4f ms\n",(double)(end_time-start_time)/CLOCKS_PER_SEC*1000.f);
 }
