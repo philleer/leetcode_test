@@ -817,7 +817,8 @@ long fibonacci_loop(int n)
 	long res = 0;
 	long last = 1;
 	long prev = 1;
-	for (int i=3; i<=n; i++)
+	// for (int i=3; i<=n; i++)
+	while (n-->2)
 	{
 		res = prev+last;
 		prev = last;
